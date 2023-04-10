@@ -9,6 +9,17 @@ import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 import org.apache.hadoop.util.GenericOptionsParser;
 
 
+/*
+ hdfs dfs -ls -R /data/topn/
+ /data/topn/dict
+ /data/topn/dict/dict.txt
+ /data/topn/input
+ /data/topn/input/data.txt
+ /data/topn/output
+ /data/topn/output/_SUCCESS
+ /data/topn/output/part-r-00000
+*/
+
 public class TestTopN {
     public static void main(String[] args) throws Exception {
         Configuration conf = new Configuration(true);
@@ -36,6 +47,9 @@ public class TestTopN {
         job.setPartitionerClass(TPartitioner.class);
         // 比较器
         job.setSortComparatorClass(TSortComparator.class);
+
+        // 0：不执行reduceTask ，这样可以排错了
+        // job.setNumReduceTasks(0);
 
         // ReduceTask
         job.setGroupingComparatorClass(TGroupingComparator.class);
