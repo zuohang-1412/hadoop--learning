@@ -32,10 +32,6 @@ public class TMapper extends Mapper<LongWritable, Text, TKey, IntWritable> {
             int wd = Integer.parseInt(strs[2]);
             mkey.setWd(wd);
             mval.set(wd);
-            System.out.println(mkey.getYear());
-            System.out.println(mkey.getMonth());
-            System.out.println(mkey.getDay());
-            System.out.println(mkey.getWd());
             context.write(mkey, mval);
         } catch (ParseException e) {
             throw new RuntimeException(e);

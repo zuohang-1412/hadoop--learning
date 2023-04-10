@@ -7,7 +7,7 @@ import org.apache.hadoop.mapreduce.Reducer;
 import java.io.IOException;
 import java.util.Iterator;
 
-public class TReduce extends Reducer<TKey, IntWritable, Text, IntWritable> {
+public class TReducer extends Reducer<TKey, IntWritable, Text, IntWritable> {
     Text rkey = new Text();
     IntWritable rval = new IntWritable();
 

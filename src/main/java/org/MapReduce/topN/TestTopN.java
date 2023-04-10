@@ -40,10 +40,8 @@ public class TestTopN {
 
         // ReduceTask
         job.setGroupingComparatorClass(TGroupingComparator.class);
-        job.setReducerClass(TReduce.class);
+        job.setReducerClass(TReducer.class);
         job.waitForCompletion(true);
-
-
 
     }
 }
