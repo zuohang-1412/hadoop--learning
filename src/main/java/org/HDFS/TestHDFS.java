@@ -1,4 +1,4 @@
-package org.example;
+package org.HDFS;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.*;
