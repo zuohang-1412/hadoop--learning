@@ -8,25 +8,30 @@ import java.io.IOException;
 import java.util.Iterator;
 
 public class TReducer extends Reducer<TKey, IntWritable, Text, IntWritable> {
+
     Text rkey = new Text();
     IntWritable rval = new IntWritable();
 
     @Override
-    protected void reduce(TKey key, Iterable<IntWritable> values, Reducer<TKey, IntWritable, Text, IntWritable>.Context context) throws IOException, InterruptedException {
+    protected void reduce(TKey key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
+
         Iterator<IntWritable> iter = values.iterator();
-        int flag = 0;
+
+        int flg = 0;
         int day = 0;
         while (iter.hasNext()) {
-            if (flag == 0) {
-                rkey.set(key.getYear() + "-" + key.getMonth() + "-" + key.getDay() + "@" + key.getWd());
+            IntWritable val = iter.next();  // -> context.nextKeyValue() ->  对key和value更新值！！！！
+            if (flg == 0) {
+                rkey.set(key.getYear() + "-" + key.getMonth() + "-" + key.getDay() + "@" + key.getLocation());
                 rval.set(key.getWd());
                 context.write(rkey, rval);
-                flag++;
+                flg++;
                 day = key.getDay();
+
             }
 
-            if (flag != 0 && day != key.getDay()) {
-                rkey.set(key.getYear() + "-" + key.getMonth() + "-" + key.getDay() + "@" + key.getWd());
+            if (flg != 0 && day != key.getDay()) {
+                rkey.set(key.getYear() + "-" + key.getMonth() + "-" + key.getDay() + "@" + key.getLocation());
                 rval.set(key.getWd());
                 context.write(rkey, rval);
                 break;

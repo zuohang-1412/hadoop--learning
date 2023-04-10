@@ -8,73 +8,87 @@ import java.io.IOException;
 
 // 自定义类型必须实现序列化/反序列化和比较器
 public class TKey implements WritableComparable<TKey> {
+
     private int year;
     private int month;
     private int day;
+    private int wd;
+
+    private String location;
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
 
     public int getYear() {
         return year;
-    }
-
-    public int getMonth() {
-        return month;
     }
 
     public void setYear(int year) {
         this.year = year;
     }
 
+    public int getMonth() {
+        return month;
+    }
+
     public void setMonth(int month) {
         this.month = month;
-    }
-
-    public void setDay(int day) {
-        this.day = day;
-    }
-
-    public void setWd(int wd) {
-        this.wd = wd;
     }
 
     public int getDay() {
         return day;
     }
 
+    public void setDay(int day) {
+        this.day = day;
+    }
+
     public int getWd() {
         return wd;
     }
 
-    private int wd;
+    public void setWd(int wd) {
+        this.wd = wd;
+    }
 
     @Override
     public int compareTo(TKey that) {
-        // the value 0 if x == y; a value less than 0 if x < y; and a value greater than 0 if x > y
-        int y1 = Integer.compare(this.year, that.getYear());
-        if (y1 ==0) {
-            int m1 = Integer.compare(this.month, that.getMonth());
-            if (m1 == 0) {
+
+        //the value 0 if x == y; a value less than 0 if x < y; and a value greater than 0 if x > y
+        int c1 = Integer.compare(this.year, that.getYear());
+
+        if (c1 == 0) {
+            int c2 = Integer.compare(this.month, that.getMonth());
+            if (c2 == 0) {
                 return Integer.compare(this.day, that.getDay());
             }
-            return m1;
+            return c2;
         }
-        return y1;
+
+        return c1;
     }
 
     @Override
     public void write(DataOutput out) throws IOException {
-    // 序列化
         out.writeInt(year);
         out.writeInt(month);
         out.writeInt(day);
         out.writeInt(wd);
+        out.writeUTF(location);
     }
 
     @Override
     public void readFields(DataInput in) throws IOException {
-    // 反 序列化
         this.year = in.readInt();
         this.month = in.readInt();
         this.day = in.readInt();
         this.wd = in.readInt();
+        this.location = in.readUTF();
     }
 }

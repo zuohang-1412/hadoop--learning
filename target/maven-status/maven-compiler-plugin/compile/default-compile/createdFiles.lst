@@ -1,6 +1,6 @@
 org/MapReduce/topN/TSortComparator.class
+org/MapReduce/topN/TReducer.class
 org/MapReduce/example/MyReducer.class
-org/MapReduce/topN/TReduce.class
 org/MapReduce/topN/TMapper.class
 org/MapReduce/example/MyMapper.class
 org/MapReduce/example/TestWordCount.class
